@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      test: ${{ steps.set_value.outputs.test }}
+      
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set value
+        id: set_value
+        run: echo "::set-output name=test::$(date +%s)"
+
+      - name: Build Docker Image
+        run: echo ${{ steps.set_value.outputs.test }}
